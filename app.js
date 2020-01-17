@@ -1,23 +1,29 @@
 var activePlayer;
 var scores;
 var roundScore;
-
+var isGameOver;
 var diceDom = document.querySelector(".dice");
 initGame();
 //Шоог шидэх эвэнт листенэр
 document.querySelector(".btn-roll").addEventListener("click", function() {
-  // 1 - 6 санамсаргүй нэг тоо гаргах
-  var diceNumber = Math.floor(Math.random() * 6) + 1;
-  // шооны зургийг гаргах
-  diceDom.style.display = "block";
+  if (isGameOver !== true) {
+    // 1 - 6 санамсаргүй нэг тоо гаргах
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
+    // шооны зургийг гаргах
+    diceDom.style.display = "block";
 
-  diceDom.src = "dice-" + diceNumber + ".png";
-  // тоглогчийн ээлжийн оноог өөрчлөх
-  if (diceNumber !== 1) {
-    roundScore = roundScore + diceNumber;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
+    diceDom.src = "dice-" + diceNumber + ".png";
+    // тоглогчийн ээлжийн оноог өөрчлөх
+    if (diceNumber !== 1) {
+      roundScore = roundScore + diceNumber;
+      document.getElementById(
+        "current-" + activePlayer
+      ).textContent = roundScore;
+    } else {
+      switchToNextPlayer();
+    }
   } else {
-    switchToNextPlayer();
+    alert("Togloom duussan !!!");
   }
 });
 
@@ -32,6 +38,8 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
     scores[activePlayer];
   //hojih esehiig shalgah
   if (scores[activePlayer] >= 100) {
+    //togloomiig duussan tuluvt oruulah
+    isGameOver = true;
     document.getElementById("name-" + activePlayer).textContent = " WINNER!!!";
     document
       .querySelector(".player-" + activePlayer + "-panel")
@@ -58,6 +66,7 @@ function switchToNextPlayer() {
 document.querySelector(".btn-new").addEventListener("click", initGame);
 
 function initGame() {
+  isGameOver = false;
   activePlayer = 0;
 
   scores = [0, 0];
