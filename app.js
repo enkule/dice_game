@@ -1,19 +1,9 @@
-var activePlayer = 0;
-
-var scores = [0, 0];
-
-var roundScore = 0;
-
-var diceNumber = Math.floor(Math.random() * 6) + 1;
-document.getElementById("score-0").textContent = "0";
-document.getElementById("score-1").textContent = "0";
-document.getElementById("current-0").textContent = "0";
-document.getElementById("current-1").textContent = "0";
+var activePlayer;
+var scores;
+var roundScore;
 
 var diceDom = document.querySelector(".dice");
-
-diceDom.style.display = "none";
-
+initGame();
 //Шоог шидэх эвэнт листенэр
 document.querySelector(".btn-roll").addEventListener("click", function() {
   // 1 - 6 санамсаргүй нэг тоо гаргах
@@ -60,5 +50,33 @@ function switchToNextPlayer() {
   document.querySelector(".player-0-panel").classList.toggle("active");
   document.querySelector(".player-1-panel").classList.toggle("active");
   // shoog tur alga bolgono
+  diceDom.style.display = "none";
+}
+
+// shine togloom ehluuleh tovchnii event listener
+
+document.querySelector(".btn-new").addEventListener("click", initGame);
+
+function initGame() {
+  activePlayer = 0;
+
+  scores = [0, 0];
+
+  roundScore = 0;
+  document.getElementById("score-0").textContent = "0";
+  document.getElementById("score-1").textContent = "0";
+  document.getElementById("current-0").textContent = "0";
+  document.getElementById("current-1").textContent = "0";
+  //toglogchdiin neriig butsaaj gargah
+
+  document.getElementById("name-0").textContent = "Player 1";
+  document.getElementById("name-1").textContent = "Player 2";
+  document.querySelector(".player-0-panel").classList.remove("winner");
+  document.querySelector(".player-1-panel").classList.remove("winner");
+
+  document.querySelector(".player-0-panel").classList.remove("active");
+  document.querySelector(".player-1-panel").classList.remove("active");
+
+  document.querySelector(".player-0-panel").classList.add("active");
   diceDom.style.display = "none";
 }
