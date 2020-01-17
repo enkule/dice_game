@@ -1,4 +1,4 @@
-var activePlayer = 1;
+var activePlayer = 0;
 
 var scores = [0, 0];
 
@@ -14,9 +14,26 @@ var diceDom = document.querySelector(".dice");
 
 diceDom.style.display = "none";
 
+//Шоог шидэх эвэнт листенэр
 document.querySelector(".btn-roll").addEventListener("click", function() {
+  // 1 - 6 санамсаргүй нэг тоо гаргах
   var diceNumber = Math.floor(Math.random() * 6) + 1;
-
+  // шооны зургийг гаргах
   diceDom.style.display = "block";
+
   diceDom.src = "dice-" + diceNumber + ".png";
+  // тоглогчийн ээлжийн оноог өөрчлөх
+  if (diceNumber !== 1) {
+    roundScore = roundScore + diceNumber;
+    document.getElementById("current-" + activePlayer).textContent = roundScore;
+  } else {
+    roundScore = 0;
+    document.getElementById("current-" + activePlayer).textContent = 0;
+    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+    // ulaan tseg shiljuuleh toggle baival nemne bxgui bol hasna
+    document.querySelector(".player-0-panel").classList.toggle("active");
+    document.querySelector(".player-1-panel").classList.toggle("active");
+    // shoog tur alga bolgono
+    diceDom.style.display = "none";
+  }
 });
